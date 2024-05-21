@@ -4,7 +4,6 @@ import { data } from "./data/resource";
 import { sayHello } from "./functions/helloworld/resource";
 import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { FunctionUrlAuthType, InvokeMode } from "aws-cdk-lib/aws-lambda";
-import { CfnOutput } from "aws-cdk-lib";
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
@@ -35,7 +34,7 @@ const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
 
 backend.addOutput({
   custom: {
-    functionUrl: sayHelloFunctionURL,
+    my_function_url: sayHelloFunctionURL.url,
   },
 });
 
