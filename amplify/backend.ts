@@ -3,7 +3,7 @@ import { auth } from "./auth/resource";
 import { data } from "./data/resource";
 import { sayHello } from "./functions/helloworld/resource";
 import { PolicyStatement } from "aws-cdk-lib/aws-iam";
-import { FunctionUrlAuthType } from "aws-cdk-lib/aws-lambda";
+import { FunctionUrlAuthType, InvokeMode } from "aws-cdk-lib/aws-lambda";
 import { CfnOutput } from "aws-cdk-lib";
 
 /**
@@ -30,4 +30,5 @@ const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
     allowedOrigins: ["*"],
     allowedHeaders: ["*"],
   },
+  invokeMode: InvokeMode.RESPONSE_STREAM,
 });
