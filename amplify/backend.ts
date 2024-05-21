@@ -24,11 +24,20 @@ const authDetails =
     })
   );
 
-const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
-  authType: FunctionUrlAuthType.AWS_IAM,
-  cors: {
-    allowedOrigins: ["*"],
-    allowedHeaders: ["*"],
-  },
-  invokeMode: InvokeMode.RESPONSE_STREAM,
-});
+// const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
+//   authType: FunctionUrlAuthType.AWS_IAM,
+//   cors: {
+//     allowedOrigins: ["*"],
+//     allowedHeaders: ["*"],
+//   },
+//   invokeMode: InvokeMode.RESPONSE_STREAM,
+// });
+
+// Another way of attaching policy
+// const statement = new iam.PolicyStatement({
+//   sid: "AllowPublishToDigest",
+//   actions: ["lambda:InvokeFunction"],
+//   resources: [lambdaAccess],
+// });
+
+// backend.sayHello.resources.lambda.addToRolePolicy(statement);
