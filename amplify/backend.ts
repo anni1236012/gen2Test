@@ -24,14 +24,20 @@ const authDetails =
     })
   );
 
-// const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
-//   authType: FunctionUrlAuthType.AWS_IAM,
-//   cors: {
-//     allowedOrigins: ["*"],
-//     allowedHeaders: ["*"],
-//   },
-//   invokeMode: InvokeMode.RESPONSE_STREAM,
-// });
+const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
+  authType: FunctionUrlAuthType.AWS_IAM,
+  cors: {
+    allowedOrigins: ["*"],
+    allowedHeaders: ["*"],
+  },
+  invokeMode: InvokeMode.RESPONSE_STREAM,
+});
+
+backend.addOutput({
+  custom: {
+    functionUrl: sayHelloFunctionURL,
+  },
+});
 
 // Another way of attaching policy
 // const statement = new iam.PolicyStatement({
