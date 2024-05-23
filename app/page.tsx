@@ -5,7 +5,6 @@ import { Sha256 } from "@aws-crypto/sha256-js";
 import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { HttpRequest } from "@aws-sdk/protocol-http";
 import { fetchAuthSession } from "aws-amplify/auth";
-import { default as fetch, Request } from "node-fetch";
 import outputs from "@/amplify_outputs.json";
 Amplify.configure(outputs);
 
@@ -46,11 +45,15 @@ export default function Home() {
 
     // Here you can handle form submission, e.g., send the data to a server
     console.log("Submitted:", { userId, password, region });
-    const request = new Request(
-      outputs.custom.my_function_url,
-      await signRequest(userId, password, region)
-    );
-    const response = await fetch(request);
+    const signedRequest = await signRequest(userId, password, region);
+    const response = await fetch(outputs.custom.my_function_url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        host: outputs.custom.my_function_url,
+      },
+      body: JSON.stringify({ userId, password, region }),
+    });
     console.log(response);
   };
 
