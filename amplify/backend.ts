@@ -23,6 +23,7 @@ const authDetails =
     })
   );
 
+// Add function url
 const sayHelloFunctionURL = backend.sayHello.resources.lambda.addFunctionUrl({
   authType: FunctionUrlAuthType.AWS_IAM,
   cors: {
