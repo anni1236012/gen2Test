@@ -1,4 +1,4 @@
 export const handler = async (event: any) => {
-  // your function code goes here
+  console.log(event);
   return "Hello, World!!";
 };
