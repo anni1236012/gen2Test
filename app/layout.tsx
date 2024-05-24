@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import GlobalContext from "@/app/context/globalContext";
 import { Inter } from "next/font/google";
+import Navbar from "./component/navbar";
 import "./globals.css";
-
+import "@/amplifyconfiguration";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <GlobalContext>
+          <Navbar />
+          {children}
+        </GlobalContext>
+      </body>
     </html>
   );
 }

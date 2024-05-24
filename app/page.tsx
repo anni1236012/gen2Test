@@ -1,12 +1,11 @@
 "use client";
-import { Amplify } from "aws-amplify";
 import { useState } from "react";
 import { Sha256 } from "@aws-crypto/sha256-js";
 import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { HttpRequest } from "@aws-sdk/protocol-http";
 import { fetchAuthSession } from "aws-amplify/auth";
 import outputs from "@/amplify_outputs.json";
-Amplify.configure(outputs);
+import "@/amplifyconfiguration";
 
 export default function Home() {
   const [userId, setUserId] = useState("");
@@ -47,12 +46,9 @@ export default function Home() {
     console.log("Submitted:", { userId, password, region });
     const signedRequest = await signRequest(userId, password, region);
     const response = await fetch(outputs.custom.my_function_url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        host: outputs.custom.my_function_url,
-      },
-      body: JSON.stringify({ userId, password, region }),
+      method: signedRequest.method,
+      headers: signedRequest.headers,
+      body: signedRequest.body,
     });
     console.log(response);
   };
@@ -62,7 +58,7 @@ export default function Home() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Get Credentials
+            Get Credentials!!
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
